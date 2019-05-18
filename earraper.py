@@ -11,7 +11,7 @@ window = QWidget()
 
 window.setGeometry(0, 0, 410, 330)
 window.setWindowTitle("Earraper")
-window.show()
+
 
 def openfile():
     global fl
@@ -26,9 +26,6 @@ def openfile():
 
 def status():
     stat.setStyleSheet('color: green')
-    stat.setText("Converting...")
-    sleep(2)
-    stat.setStyleSheet('color: green')
     stat.setText("Done!")
     sleep(1)
     stat.setText("Idle")
@@ -38,16 +35,18 @@ def runcon():
     Thread(target=convert).start()
 
 def convert():
-    global fl
     dbs = txt.text()
     db = int(dbs)
     lowpassfreq = slider.value()
     (lowpassfreq)
     sound = AudioSegment.from_mp3(fl)
     sndloud = sound + db
-    status()
+    stat.setStyleSheet('color: green')
+    stat.setText("Converting...")
     sndboosted = sndloud.low_pass_filter(lowpassfreq)
     sndboosted.export("Earraped.mp3", format='mp3')
+    status()
+   
     
 
 
@@ -56,7 +55,6 @@ erpr = QLabel("Earraper V1.0", window)
 erpr.move(250,5)
 erpr.setFont(QFont("Arial", 17, QFont.Black))
 erpr.show()
-
 dev = QLabel("Developed by cududont", window)
 dev.move(10,18)
 dev.setFont(QFont("Arial thin", 8, QFont.Black))
@@ -101,28 +99,28 @@ lp.show()
 
 slider = QSlider(Qt.Horizontal, window)
 slider.setFocusPolicy(Qt.StrongFocus)
-slider.setTickInterval(2500)
+slider.setTickInterval(2250)
 slider.move(175,130)
-slider.setMaximum(6000)
-slider.setMinimum(1000)
-slider.setValue(3500)
+slider.setMaximum(5000)
+slider.setMinimum(500)
+slider.setValue(2755)
 slider.setTickPosition(2)
 slider.show()
 slider.resize(218,23)
 
-nb1 = QLabel("1000", window)
+nb1 = QLabel("500", window)
 nb1.move(166,118)
 nb1.setFont(QFont("Arial thin", 8, QFont.Black))
 nb1.setStyleSheet('color: gray')
 nb1.show()
 
-nb2 = QLabel("3500", window)
+nb2 = QLabel("2250", window)
 nb2.move(270,118)
 nb2.setFont(QFont("Arial thin", 8, QFont.Black))
 nb2.setStyleSheet('color: gray')
 nb2.show()
 
-nb3 = QLabel("6000", window)
+nb3 = QLabel("5000", window)
 nb3.move(374,118)
 nb3.setFont(QFont("Arial thin", 8, QFont.Black))
 nb3.setStyleSheet('color: gray')
@@ -178,5 +176,6 @@ stat.setFont(QFont("Arial", 12, QFont.Black))
 stat.setStyleSheet('color: green')
 stat.show()
 
+window.show()
 
 sys.exit(app.exec_())
