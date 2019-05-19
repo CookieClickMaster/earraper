@@ -5,6 +5,11 @@ from PyQt5.QtCore import Qt, QByteArray
 from time import sleep
 from threading import Thread
 import sys
+import win32gui, win32con
+
+Minimize = win32gui.GetForegroundWindow()
+win32gui.ShowWindow(Minimize, win32con.SW_MINIMIZE)
+
 
 def iconFromBase64(base64):
     pixmap = QPixmap()
