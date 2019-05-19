@@ -1,13 +1,24 @@
 from pydub import AudioSegment
-from PyQt5.QtGui import QFont, QIcon
+from PyQt5.QtGui import QFont, QIcon, QPixmap
 from PyQt5.QtWidgets import QWidget, QLabel, QSlider, QLineEdit, QApplication, QPushButton, QFileDialog
-from PyQt5.QtCore import Qt
+from PyQt5.QtCore import Qt, QByteArray
 from time import sleep
 from threading import Thread
 import sys
 
+def iconFromBase64(base64):
+    pixmap = QPixmap()
+    pixmap.loadFromData(QByteArray.fromBase64(base64))
+    icon = QIcon(pixmap)
+    return icon
+
+image_base64 = b"R0lGODlhGQAZAHAAACH5BAEAAPwALAAAAAAZABkAhwAAAAAAMwAAZgAAmQAAzAAA/wArAAArMwArZgArmQArzAAr/wBVAABVMwBVZgBVmQBVzABV/wCAAACAMwCAZgCAmQCAzACA/wCqAACqMwCqZgCqmQCqzACq/wDVAADVMwDVZgDVmQDVzADV/wD/AAD/MwD/ZgD/mQD/zAD//zMAADMAMzMAZjMAmTMAzDMA/zMrADMrMzMrZjMrmTMrzDMr/zNVADNVMzNVZjNVmTNVzDNV/zOAADOAMzOAZjOAmTOAzDOA/zOqADOqMzOqZjOqmTOqzDOq/zPVADPVMzPVZjPVmTPVzDPV/zP/ADP/MzP/ZjP/mTP/zDP//2YAAGYAM2YAZmYAmWYAzGYA/2YrAGYrM2YrZmYrmWYrzGYr/2ZVAGZVM2ZVZmZVmWZVzGZV/2aAAGaAM2aAZmaAmWaAzGaA/2aqAGaqM2aqZmaqmWaqzGaq/2bVAGbVM2bVZmbVmWbVzGbV/2b/AGb/M2b/Zmb/mWb/zGb//5kAAJkAM5kAZpkAmZkAzJkA/5krAJkrM5krZpkrmZkrzJkr/5lVAJlVM5lVZplVmZlVzJlV/5mAAJmAM5mAZpmAmZmAzJmA/5mqAJmqM5mqZpmqmZmqzJmq/5nVAJnVM5nVZpnVmZnVzJnV/5n/AJn/M5n/Zpn/mZn/zJn//8wAAMwAM8wAZswAmcwAzMwA/8wrAMwrM8wrZswrmcwrzMwr/8xVAMxVM8xVZsxVmcxVzMxV/8yAAMyAM8yAZsyAmcyAzMyA/8yqAMyqM8yqZsyqmcyqzMyq/8zVAMzVM8zVZszVmczVzMzV/8z/AMz/M8z/Zsz/mcz/zMz///8AAP8AM/8AZv8Amf8AzP8A//8rAP8rM/8rZv8rmf8rzP8r//9VAP9VM/9VZv9Vmf9VzP9V//+AAP+AM/+AZv+Amf+AzP+A//+qAP+qM/+qZv+qmf+qzP+q///VAP/VM//VZv/Vmf/VzP/V////AP//M///Zv//mf//zP///wAAAAAAAAAAAAAAAAjAAPcJHEiwoMGDB8UAQMiwYCYAADI1bPgQIjGCkwDcmLhPGUSIygh6hDjxo0WDChciNAlRYkeX+1IKVDYpU02WIAVCFDMwRsR9OHFe7LhzIMmgLIfqVLnP50ikED8RfLhxX8aKUAEoXToTAJqsJwmSJJoya0ixMQQ+zAgWZkwAkwR+xQpVaUWjC8ECOJvy7MO0Bct+HJqT68EbLN3i5YlwhcmzA4lBrMrQ5NavABiXLCyQWAzIHFtybKhM8+jTCAMCADs="
+
 app = QApplication(sys.argv)
 window = QWidget()
+
+icon = iconFromBase64(image_base64)
+window.setWindowIcon(icon)
 
 window.setGeometry(0, 0, 410, 330)
 window.setWindowTitle("Earraper")
