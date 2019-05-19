@@ -1,6 +1,6 @@
 from pydub import AudioSegment
 from PyQt5.QtGui import QFont, QIcon, QPixmap
-from PyQt5.QtWidgets import QWidget, QLabel, QSlider, QLineEdit, QApplication, QPushButton, QFileDialog
+from PyQt5.QtWidgets import QWidget, QLabel, QSlider, QLineEdit, QApplication, QPushButton, QFileDialog, QRadioButton
 from PyQt5.QtCore import Qt, QByteArray
 from time import sleep
 from threading import Thread
@@ -20,9 +20,10 @@ window = QWidget()
 icon = iconFromBase64(image_base64)
 window.setWindowIcon(icon)
 
-window.setGeometry(0, 0, 410, 330)
+window.setGeometry(0, 0, 410, 370)
 window.setWindowTitle("Earraper")
 
+dbm = 1 
 
 def openfile():
     global fl
@@ -46,12 +47,20 @@ def runcon():
     Thread(target=convert).start()
 
 def convert():
+    if b1.isChecked() == True:
+        dbm = 1
+    elif b2.isChecked() == True:
+        dbm = 2
+    elif b3.isChecked() == True:
+        dbm = 3 
+    else:
+        dbm = 1
     dbs = txt.text()
     db = int(dbs)
     lowpassfreq = slider.value()
     (lowpassfreq)
     sound = AudioSegment.from_mp3(fl)
-    sndloud = sound + db
+    sndloud = sound + db * dbm
     stat.setStyleSheet('color: green')
     stat.setText("Converting...")
     sndboosted = sndloud.low_pass_filter(lowpassfreq)
@@ -59,8 +68,6 @@ def convert():
     status()
    
     
-
-
 
 erpr = QLabel("Earraper V1.0", window)
 erpr.move(250,5)
@@ -89,8 +96,8 @@ ln2.show()
 btn = QPushButton("Choose File", window)
 btn.clicked.connect(openfile)
 btn.setFont(QFont("Arial light", 10, QFont.Black))
-btn.resize(385,30)
 btn.move(9,70)
+btn.resize(385,30)
 btn.show()
 
 sett = QLabel("Settings", window)
@@ -119,17 +126,17 @@ slider.setTickPosition(2)
 slider.show()
 slider.resize(218,23)
 
-nb1 = QLabel("500", window)
-nb1.move(166,118)
-nb1.setFont(QFont("Arial thin", 8, QFont.Black))
-nb1.setStyleSheet('color: gray')
-nb1.show()
+nb3 = QLabel("500", window)
+nb3.move(166,118)
+nb3.setFont(QFont("Arial thin", 8, QFont.Black))
+nb3.setStyleSheet('color: gray')
+nb3.show()
 
-nb2 = QLabel("2250", window)
-nb2.move(270,118)
-nb2.setFont(QFont("Arial thin", 8, QFont.Black))
-nb2.setStyleSheet('color: gray')
-nb2.show()
+nb3 = QLabel("2250", window)
+nb3.move(270,118)
+nb3.setFont(QFont("Arial thin", 8, QFont.Black))
+nb3.setStyleSheet('color: gray')
+nb3.show()
 
 nb3 = QLabel("5000", window)
 nb3.move(374,118)
@@ -153,13 +160,28 @@ txt.resize(80,20)
 txt.move(120,158)
 txt.show()
 
+b1 = QRadioButton("x1", window)
+b1.setChecked(True)
+b1.move(115, 187)
+b1.show()
+
+b2 = QRadioButton("x2", window)
+b2.setChecked(False)
+b2.move(155, 187)
+b2.show()
+
+b3 = QRadioButton("x3", window)
+b3.setChecked(False)
+b3.move(195, 187)
+b3.show()
+
 con = QLabel("Convert", window)
-con.move(10,180)
+con.move(10,210)
 con.setFont(QFont("Arial", 12, QFont.Black))
 con.show()
 
 ln3 = QLabel("____________________", window)
-ln3.move(92,167)
+ln3.move(92,197)
 ln3.setFont(QFont("Arial bold", 17, QFont.Black))
 ln3.show()
 
@@ -167,25 +189,30 @@ btn2 = QPushButton("Convert", window)
 btn2.clicked.connect(runcon)
 btn2.setFont(QFont("Arial light", 10, QFont.Black))
 btn2.resize(385,70)
-btn2.move(10,205)
+btn2.move(10,235)
 btn2.show()
 
 nb3 = QLabel("*Note: Output file will be exported to the same directory as Earraper", window)
-nb3.move(10,280)
+nb3.move(10,310)
 nb3.setFont(QFont("Arial thin", 8, QFont.Black))
 nb3.setStyleSheet('color: gray')
 nb3.show()
 
 st = QLabel("Status:", window)
-st.move(10,300)
+st.move(10,330)
 st.setFont(QFont("Arial", 12, QFont.Black))
 st.show()
 
 stat = QLabel("Idle                              ", window)
-stat.move(80,300)
+stat.move(80,330)
 stat.setFont(QFont("Arial", 12, QFont.Black))
 stat.setStyleSheet('color: green')
 stat.show()
+
+d = QLabel("dB Multiplier:", window)
+d.move(10,185)
+d.setFont(QFont("Arial light", 11, QFont.Black))
+d.show()
 
 window.show()
 
