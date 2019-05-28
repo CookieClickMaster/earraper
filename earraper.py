@@ -63,16 +63,19 @@ def convert():
     stat.setText("Converting...")
     if b1.isChecked() == True:
     	sndboosted = sndloud.low_pass_filter(lowpassfreq)
-    	sndboosted.export("Earraped.mp3", format='mp3')
+    	sndboostedb = sndboosted + db
+    	sndboostedb.export("Earraped.mp3", format='mp3')
     elif b2.isChecked() == True:
     	sndboosted = sndloud.low_pass_filter(lowpassfreq)
     	sndboosted2 = sndboosted.low_pass_filter(lowpassfreq)
-    	sndboosted2.export("Earraped.mp3", format='mp3')
+    	sndboosted2b = sndboosted2 + db
+    	sndboosted2b.export("Earraped.mp3", format='mp3')
     elif b3.isChecked() == True:
     	sndboosted = sndloud.low_pass_filter(lowpassfreq)
     	sndboosted2 = sndboosted.low_pass_filter(lowpassfreq)
     	sndboosted3 = sndboosted2.low_pass_filter(lowpassfreq)
-    	sndboosted3.export("Earraped.mp3", format='mp3')
+    	sndboosted3b = sndboosted3 + db 
+    	sndboosted3b.export("Earraped.mp3", format='mp3')
     else:
         pass
     	
