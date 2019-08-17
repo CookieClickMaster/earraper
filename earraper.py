@@ -34,7 +34,6 @@ window.setWindowTitle("Earraper")
 def openfile():
     global fl
     options = QFileDialog.Options()
-    options |= QFileDialog.DontUseNativeDialog
     fileName, _ = QFileDialog.getOpenFileName(window,"Choose File", "","Sound Files (*.mp3)", options=options)
     if fileName:
     	fl = fileName
